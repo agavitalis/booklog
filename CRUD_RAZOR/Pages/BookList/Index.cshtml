@@ -1,0 +1,64 @@
+﻿@page
+@model CRUD_RAZOR.Pages.BookList.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>My Book List</h2>
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Info!</strong> @Model.Message
+    </div>
+}
+<br />
+
+
+<div class="row">
+    <div class="col-md-12" style="margin-bottom:25px">
+        <a asp-page="Create" class="btn btn-primary">Create a New Book</a>
+    </div>
+</div>
+
+@if (Model.Books.Count() > 0)
+{
+    <table class="table table-bordered">
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.Books.FirstOrDefault().Name)</th>
+
+            <th>@Html.DisplayNameFor(m => m.Books.FirstOrDefault().Author)</th>
+
+            <th>@Html.DisplayNameFor(m => m.Books.FirstOrDefault().ISBN)</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        @foreach (var item in Model.Books)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => item.Name)</td>
+
+                <td>@Html.DisplayFor(m => item.Author)</td>
+
+                <td>@Html.DisplayFor(m => item.ISBN)</td>
+                <th>
+
+                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm">Edit</a>
+
+                </th>
+                <th>
+                    <form method="Post">
+                        <button asp-page-handler="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </th>
+
+            </tr>
+
+        }
+
+    </table>
+}
+else
+{
+    <div>Books Not avaliable</div>
+}
